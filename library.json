@@ -1,0 +1,19 @@
+{
+  "name": "LFRing",
+  "version": "1.0.0",
+  "description": "A persistent circular buffer library for ESP32 using LittleFS and NVS to ensure data integrity across reboots or power loss.",
+  "keywords": "ESP32, esp-idf, LittleFS, ring buffer, NVS, onewire",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LinkouCommander/LFRing.git"
+  },
+  "authors": [
+    {
+      "name": "Brian Hsieh",
+      "url": "https://github.com/LinkouCommander",
+      "maintainer": true
+    }
+  ],
+  "frameworks": ["espidf"],
+  "platforms": ["espressif32"]
+}
