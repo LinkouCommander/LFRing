@@ -18,7 +18,8 @@ typedef enum {
     LFRB_NVS_ERROR = 1,
     LFRB_LFS_ERROR = 2,
     LFRB_ROOT_NOT_FOUND_ERROR = 3,
-    LFRB_NFILE_ERROR = 4
+    LFRB_NFILE_ERROR = 4,
+    LFRB_ENUM_EXCEED = 5
 } ringbuf_error_t;
 
 typedef struct {

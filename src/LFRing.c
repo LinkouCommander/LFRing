@@ -1,14 +1,3 @@
-/*
- * LFRing - LittleFS Ring Buffer Library for ESP32
- * 
- * Author: Chih-Cheng (Brian) Hsieh
- * Date: 2025-10-29
- * 
- * Description:
- *   Provides a persistent, power-loss-safe circular buffer implementation
- *   using LittleFS, and NVS for metadata storage.
- */
-
 #include "LFRing.h"
 #include "nvs.h"
 #include <string.h>
@@ -404,9 +393,27 @@ int LFRingWrite(ringbuf_meta_t *meta, void* data, size_t num) {
     // Read meta data
     load_ringbuf_meta(meta);
 
+    // Reject requests that exceed buffer capacity
+    if(num > meta->item_num-1) {
+        xSemaphoreGive(meta->lock);
+        return -LFRB_ENUM_EXCEED;
+    }
+
     // Attempt to write data into the ring buffer
-    int n = ringbuf_write(meta, data, num);
-    if(n < 0) return n;
+    // Case 1: Enough space from current head to the end of buffer
+    // -> Write data in one contiguous block
+    int n = 0;
+    if(meta->item_num - meta->head >= num) {
+        n += ringbuf_write(meta, data, num);
+    }
+    // Case 2: Data to write exceeds remaining space at buffer end
+    // -> Split into two writes (wrap-around)
+    else {
+        int write_num = meta->item_num - meta->head;
+        n += ringbuf_write(meta, data, write_num);
+        meta->head = 0;
+        n += ringbuf_write(meta, (uint8_t*)data + write_num * meta->item_size, num - write_num);
+    }
 
     // Update head & tail ptr
     // Calculate how much of the buffer is currently used
