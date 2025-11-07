@@ -27,14 +27,14 @@ It uses LittleFS (based on [joltwallet/esp_littlefs](https://github.com/joltwall
 └────────────┬─────────────────────────┘
              │
 ┌────────────▼─────────────────────────┐
+│           NVS Metadata               │
+│     Tracks head/tail/item info       │
+└──────────────────────────────────────┘
+             │
+┌────────────▼─────────────────────────┐
 │          LFS Ring Buffer             │
 │       Stores actual data in          │
 │     LittleFS as <namespace>.bin      │
-└────────────┬─────────────────────────┘
-             │
-┌────────────▼─────────────────────────┐
-│           NVS Metadata               │
-│     Tracks head/tail/item info       │
 └──────────────────────────────────────┘
 ```
 
