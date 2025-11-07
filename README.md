@@ -3,6 +3,8 @@
 `LFRing` is a lightweight, fault-tolerant circular buffer implementation designed for ESP-IDF.
 It uses LittleFS (based on [joltwallet/esp_littlefs](https://github.com/joltwallet/esp_littlefs)) for persistent storage and NVS for metadata management, ensuring data integrity even during power loss or unexpected resets.
 
+[![PlatformIO Registry](https://badges.registry.platformio.org/packages/linkoucommander/library/LFRing.svg)](https://registry.platformio.org/libraries/linkoucommander/LFRing)
+
 ## Features
 - **Circular buffer** with automatic overwrite of oldest data
 
